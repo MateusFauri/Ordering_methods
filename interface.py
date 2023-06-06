@@ -18,9 +18,9 @@ def interfaceCTk():
 
 class CTkApplication(ctk.CTk):
     def __init__(self, master=None):
-
         self.frame = ctk.CTkFrame(master=master)
         self.frame.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+        self.resultFrame = ResultFrame(master)
 
         self.path = ctk.CTkEntry(self.frame, width = 200, placeholder_text="File name")
         self.path.grid(column=0,row=1, padx=15, pady=10)
@@ -29,7 +29,7 @@ class CTkApplication(ctk.CTk):
         self.message = ctk.CTkLabel(self.frame, text="", fg_color="transparent")
         self.message.grid(column=0,row=3, padx=3, pady=3)
 
-        methodOptions = ["Heap", "Selection", "Insertion", "Shell"]
+        methodOptions = [ "Selection", "Insertion", "Shell","Heap"]
 
         self.methodLabel = ctk.CTkLabel(self.frame, text="Method for sorting", fg_color="transparent")
         self.methodLabel.grid(column=0,row=4, padx=3, pady=3)
@@ -72,9 +72,12 @@ class CTkApplication(ctk.CTk):
 
     def _sort(self):
         sort = sorts(self.list, self.size)
-        method = self.clicked.get()
-        inicio = time.time()
+        method = self.method.get()
+        self.resultFrame.grid(row=0, column=4, padx=20, pady=20, sticky="nsew")
+        self.resultFrame.sorting()
 
+        inicio = time.time()
+        
         if method == "Selection":
             sort.selection_sort()
         elif method == "Heap":
@@ -83,11 +86,31 @@ class CTkApplication(ctk.CTk):
             sort.insertionSort(solo=True)
         elif method == "Shell":
             sort.shell_sort()
+        
         fim = time.time()
 
+        self.resultFrame.doneSort()
+        self.resultFrame.time(fim-inicio)
         with open('saida.txt','w') as saida:
             for element in self.list:
                 saida.write(str(element) + ' ')
     
-            saida.write(f"\nTempo: {fim-inicio:.6f} segundos com tamanho {self.size} elementos.")
-        
+            saida.write(f"\nTempo: {fim-inicio:.6f} segundos com tamanho {self.size} elementos com metodo {method}.")
+
+class ResultFrame(ctk.CTkFrame):
+    def __init__(self, master):
+        super().__init__(master)
+        self.resultTime = ctk.CTkLabel(self, text="", fg_color="transparent")
+        self.done = ctk.CTkLabel(self, text="", fg_color="transparent")
+
+    def sorting(self):
+        self.done.grid(row=0, column=1)
+        self.done.configure(text="Sorting....")
+
+    def doneSort(self):
+        self.done.configure(text="Finish!")
+
+    def time(self, time):
+        self.resultTime.grid(row=4, column=1)
+        self.resultTime.configure(text=f"Time: {time:.6f}")
+

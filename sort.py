@@ -8,10 +8,10 @@ class sorts(object):
 
     def heap_sort(self):
         _heap = self.tamanho
-        print(self.lista)
+       # print(self.lista)
         
         self._build_heap() 
-        print(self.lista)
+        #print(self.lista)
 
         for nodo_max in range (_heap - 1, 0, -1):
             _auxiliar = self.lista[0]
@@ -19,7 +19,7 @@ class sorts(object):
             self.lista[nodo_max] = _auxiliar
             _heap -= 1
             self._max_heapify(0, _heap)
-            print(self.lista)
+            #print(self.lista)
 
     def selection_sort(self):
         print(self.lista)
