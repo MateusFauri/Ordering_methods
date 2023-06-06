@@ -1,8 +1,7 @@
 import interface as inter
 import sort 
 
-
-inter.interfaceTtk()
+inter.interfaceCTk()
 
 """ 
 lista_selection = [32,7,3,15,13,4,21,6,2,9,1,31,45,11,5,8]

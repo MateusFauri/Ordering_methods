@@ -3,3 +3,4 @@
 tk
 pandas
 numpy
+customtkinter
