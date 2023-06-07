@@ -1,17 +1,23 @@
 import time
-import subprocess
 
 class sorts(object):
     def __init__(self, lista, tamanho):
         self.lista = lista
         self.tamanho = tamanho
 
+    def quick_sort(self, inicio=0, fim=None):
+        fim = fim if fim is not None else self.tamanho
+        
+        if inicio < fim:
+            print(self.lista)
+            _part = self._particao( inicio, fim)
+            self.quick_sort( inicio, _part)
+            self.quick_sort( _part + 1, fim)
+            print(self.lista)
+
     def heap_sort(self):
         _heap = self.tamanho
-       # print(self.lista)
-        
         self._build_heap() 
-        #print(self.lista)
 
         for nodo_max in range (_heap - 1, 0, -1):
             _auxiliar = self.lista[0]
@@ -19,10 +25,8 @@ class sorts(object):
             self.lista[nodo_max] = _auxiliar
             _heap -= 1
             self._max_heapify(0, _heap)
-            #print(self.lista)
 
     def selection_sort(self):
-        print(self.lista)
         for index in range(self.tamanho):
             _min = index
             for next in range(index, self.tamanho):
@@ -32,7 +36,6 @@ class sorts(object):
                 aux = self.lista[index]
                 self.lista[index] = self.lista[_min]
                 self.lista[_min] = aux
-            print(self.lista)
 
     def shell_sort(self, tipo = 'SHELL'):
         lista_gap = []
@@ -54,18 +57,12 @@ class sorts(object):
             pass
         
         lista_gap.reverse()
-        print(self.lista)
 
         for gap in lista_gap:
             for inicio in range(gap): 
                 self.insertionSort(inicio, gap)
 
-            print(self.lista)
-
     def insertionSort(self, inicio = 0, gap = 1, solo=False):
-        if solo:
-            print(self.lista)
-
         for elemento in range(inicio + gap, self.tamanho, gap):
             chave = int(self.lista[elemento])
             number = int(elemento)
@@ -73,9 +70,6 @@ class sorts(object):
                 self.lista[number] = self.lista[number - gap]
                 number -= gap
             self.lista[number] = chave
-
-            if solo:
-                print(self.lista)
 
     def _potencia_2(self, gaps):
         number = i = 1
@@ -121,3 +115,12 @@ class sorts(object):
             self.lista[_max] = _auxiliar
             self._max_heapify(_max, tamanho)
 
+    def _particao(self, inicio, fim):
+        pivo = self.lista[fim - 1]
+
+        for indice in range(inicio, fim):
+            if self.lista[indice] <= pivo:
+                self.lista[indice], self.lista[inicio] = self.lista[inicio], self.lista[indice]
+                inicio += 1
+
+        return inicio - 1

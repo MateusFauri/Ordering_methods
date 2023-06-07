@@ -1,23 +1,24 @@
-import interface as inter
-import sort 
+import interfaces.windows as windows
+import customtkinter as ctk
+from tkinter import *
 
-inter.interfaceCTk()
+class CTkApplication(ctk.CTk):
+    def __init__(self, master=None):
+        self.frame = windows.MainInterface(master)
 
-""" 
-lista_selection = [32,7,3,15,13,4,21,6,2,9,1,31,45,11,5,8]
+        self.exit = ctk.CTkButton(master, text="Quit", command=master.destroy)
+        self.exit.grid(column=1, row=10, padx=15, pady=10)
 
-selecao = inter.desenhar_interface()
-sorts = sort.sorts(lista_selection, len(lista_selection))
+def interfaceCTk():
+    ctk.set_appearance_mode("dark")  
+    ctk.set_default_color_theme("blue")
 
-if selecao == 1:
-    sorts.insertionSort(solo=True)
-elif selecao == 2:
-    tipo = inter.selection_sort_interface()
-    sorts.insertionSort(tipo = tipo)
-elif selecao == 3:
-    sorts.selection_sort()
-elif selecao == 4:
-    sorts.heap_sort()
+    app = ctk.CTk()  
+    app.title("Sorting")
+    
+    CTkApplication(app)
 
+    app.mainloop()
 
- """
+interfaceCTk()
+
